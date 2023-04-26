@@ -1,18 +1,15 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
+import { createApp } from 'vue'
+import App from './App.vue'
 import router from './router'
+//컴포넌트 전역 등록(토글버튼, 스크롤 픽커)
+import Toggle from "@vueform/toggle";
+import ScrollPicker from 'vue3-scroll-picker';
 import axios from 'axios'
 
-Vue.prototype.$http = axios
 
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+const app = createApp(App);
+app.config.globalProperties.$http = axios;
+app.use(router);
+app.component("Toggle",Toggle);
+app.component("ScrollPicker",ScrollPicker)
+app.mount('#app');

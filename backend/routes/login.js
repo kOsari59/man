@@ -1,10 +1,12 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 
-const users = require('../data/users.json');
+const users=require('../data/users.json');
 
-router.get('/',function(req,res,next){
-    res.json({user:users[0]});
+/* GET users listing. */
+// /주소의 요청일때만 실행
+router.get('/', function(req, res, next) {
+  res.json({user:users[0]});
 });
 
 module.exports = router;
