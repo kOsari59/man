@@ -9,9 +9,9 @@
     
     <div v-if="user">
     <h1>아이디</h1>
-    <h1> 아이디 :{{ user.id }}</h1>
-    <h1> 비밀번호 :{{ user.password }}</h1>
-    <h1> 이름 :{{ user.name }}</h1>
+    <h1> 아이디 : kmc5948 <!--{{온도들어가됨}}--></h1>
+    <h1> 비밀번호 :{{ user[0].user_pw }}</h1>
+    <h1> 이름 :{{ user[0].user_name }}</h1>
   </div>
     
     <img class="bathstart" src="../assets/play.png" v-on:click="bStart" />
@@ -52,7 +52,7 @@ export default {
     //목욕 시작 명령
     bStart: function () {
       this.$http.get('/api/login').then((res)=>{
-        const user = res.data.user;
+        const user = res.data;
         if(user) this.user = user;
         console.log("출력내용");
         console.log(user);
