@@ -7,7 +7,13 @@
         <div class="left_box">목욕 온도</div>
         <div class="right_box">{{ tempvalue }}도</div>
       </div>
-      <vue-slider v-model="tempvalue" :min="30" :max="45" :interval="1" />
+      <vue-slider
+        class="slider"
+        v-model="tempvalue"
+        :min="35"
+        :max="45"
+        :interval="1"
+      />
     </div>
 
     <div id="LevelSetting">
@@ -15,7 +21,13 @@
         <div class="left_box">물 높이</div>
         <div class="right_box">{{ levelvalue }}%</div>
       </div>
-      <vue-slider v-model="levelvalue" :interval="10" />
+      <vue-slider
+        class="slider"
+        v-model="levelvalue"
+        :min="30"
+        :max="100"
+        :interval="10"
+      />
     </div>
   </div>
 </template>
@@ -30,22 +42,17 @@ export default {
   },
   setup() {
     //슬라이더의 값(목욕 온도, 물 높이) 외부로 값을 빼야함
-    const data = reactive({ tempvalue: 40, levelvalue: 30 });
+    const data = reactive({ tempvalue: 40, levelvalue: 80 });
     return toRefs(data);
   },
 };
 </script>
 <style scoped>
-.box {
-  border-radius: 5%;
-  background-color: white;
-  margin: 3px;
-  padding: 8px;
-}
 .title {
-  height: 30px;
+  height: 10%;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 5%;
 }
 
 .left_box {
@@ -56,10 +63,13 @@ export default {
 }
 
 #TempSetting {
-  margin: 15px;
+  margin: 3.7%;
 }
 
 #LevelSetting {
-  margin: 15px;
+  margin: 3.7%;
+}
+.slider {
+  z-index: 0;
 }
 </style>

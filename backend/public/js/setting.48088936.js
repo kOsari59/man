@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkmankik_bath"]=self["webpackChunkmankik_bath"]||[]).push([[314],{836:function(n,t,u){u.r(t),u.d(t,{default:function(){return c}});var e=u(252);function r(n,t){const u=(0,e.up)("router-link");return(0,e.wg)(),(0,e.iD)("div",null,[(0,e.Wm)(u,{to:"/mypage"},{default:(0,e.w5)((()=>[(0,e.Uk)("<")])),_:1}),(0,e.Uk)(" 설정 ")])}var a=u(744);const k={},i=(0,a.Z)(k,[["render",r]]);var c=i}}]);
+//# sourceMappingURL=setting.48088936.js.map

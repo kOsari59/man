@@ -1,4 +1,7 @@
+<!--설정 화면(테마, 알림)-->
 <template>
-  <router-link to="/mypage">&lt;</router-link>
-  <h1>설정</h1>
+  <div>
+    <router-link to="/mypage">&lt;</router-link>
+    설정
+  </div>
 </template>

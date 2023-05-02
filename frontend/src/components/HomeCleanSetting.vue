@@ -4,8 +4,14 @@
       <div class="left_box">청소 설정</div>
       <Toggle v-model="value" class="right_box" />
     </div>
-    <div>
-      <scroll-picker :options="options" v-model="selections" />
+    <div style="height: auto; min-height: 150px">
+      <scroll-picker
+        :options="options"
+        v-model="selections"
+        style="width: 25%"
+        class="left_box scrollpicker"
+      />
+      <span class="second">초</span>
     </div>
   </div>
 </template>
@@ -68,21 +74,23 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.box {
-  border-radius: 5%;
-  background-color: white;
-  margin: 3px;
-  padding: 8px;
-}
 .title {
-  height: 30px;
+  height: 10%;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 5%;
 }
 .left_box {
   float: left;
 }
 .right_box {
   float: right;
+}
+.second {
+  line-height: 900%;
+}
+
+.scrollpicker {
+  z-index: 0;
 }
 </style>

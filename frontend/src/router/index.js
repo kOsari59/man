@@ -24,8 +24,7 @@ const routes = [
     path: '/setting',
     name: 'setting',
     component: () => import(/* webpackChunkName: "setting" */ '../views/SettingView.vue')
-  },
-  
+  }
   
 ]
 

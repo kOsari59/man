@@ -4,8 +4,19 @@
       <div class="left_box">예약 설정</div>
       <Toggle v-model="value" class="right_box" />
     </div>
-    <div>
-      <scroll-picker :options="options" v-model="selections" />
+    <div style="min-height: 150px">
+      <scroll-picker
+        :options="houroptions"
+        v-model="hourselections"
+        class="left_box scrollpicker"
+      />
+      <span class="left_box span_text">시</span>
+      <scroll-picker
+        :options="minuteoptions"
+        v-model="minuteselections"
+        class="left_box scrollpicker"
+      />
+      <span class="left_box span_text">분 후</span>
     </div>
   </div>
 </template>
@@ -13,7 +24,7 @@
 import "@vueform/toggle/themes/default.css";
 import { defineComponent, reactive, toRefs } from "vue";
 
-const scrollpickerOptions = [
+const spHourOptions = [
   [
     {
       label: "0",
@@ -44,6 +55,8 @@ const scrollpickerOptions = [
       value: 6,
     },
   ],
+];
+const spMinuteOptions = [
   [
     {
       label: "5",
@@ -95,12 +108,13 @@ const scrollpickerOptions = [
     },
   ],
 ];
-
 export default defineComponent({
   setup() {
     const state = reactive({
-      options: scrollpickerOptions,
-      selections: [0, 30],
+      houroptions: spHourOptions,
+      hourselections: [0],
+      minuteoptions: spMinuteOptions,
+      minuteselections: [30],
       value: true,
     });
     return {
@@ -110,21 +124,22 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.box {
-  border-radius: 5%;
-  background-color: white;
-  margin: 3px;
-  padding: 8px;
-}
 .title {
-  height: 30px;
+  height: 10%;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 5%;
 }
 .left_box {
   float: left;
 }
 .right_box {
   float: right;
+}
+.span_text {
+  line-height: 150px;
+}
+.scrollpicker {
+  z-index: 0;
 }
 </style>
