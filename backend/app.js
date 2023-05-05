@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var reflashRouter = require('./routes/reflash');
+var arduinohRouter = require('./routes/arduino');
 
 var app = express();
 
@@ -25,7 +26,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/login', loginRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
 app.use('/api/reflash', reflashRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
-
+app.use('/api/arduino', arduinohRouter);
 
 
 

@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-router.get('/', function(req, res, next) {
+router.get('/data', function(req, res, next) {
   connection.query('select * from bath',(error,rows,fields)=>{
     if(error) throw error;
     res.send(rows);  
