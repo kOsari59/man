@@ -4,11 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var reflashRouter = require('./routes/reflash');
-var arduinohRouter = require('./routes/arduino');
+var arduinoRouter = require('./routes/arduino');
+var webRouter = require('./routes/web');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -22,12 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 app.use('/api/login', loginRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
 app.use('/api/reflash', reflashRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
-app.use('/api/arduino', arduinohRouter);
-
+app.use('/api/arduino', arduinoRouter);
+app.use('/api/arduino', webRouter);
+app.use(bodyParser.urlencoded({ extended: false}));
 
 
 // catch 404 and forward to error handler
