@@ -1,19 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'smart_bath'
-});
+// const mysql = require('mysql2');
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '1234',
+//   database: 'smart_bath'
+// });
 
-connection.connect();
-//바스 정보 올리고 받기
-//스케줄 정보 받기
-
-
+// connection.connect();
+// //바스 정보 올리고 받기
+// //스케줄 정보 받기
+var db_config  = require(__dirname+'/../config/database.js');
+var connection = db_config .init();
+db_config.connect(connection);
 
 //아두이노 온도 정보 갱신
 router.put('/temp/:id/:temp', function (req, res, next) {
@@ -217,8 +218,8 @@ router.post('/history',function(req,res,next){
   let avg_temp =  req.body.avg_temp;
   let is_shower = req.body.is_shower;
   let state = req.body.state;
-  let h_vale = req.body.h_vale;
-  let c_vale = req.body.c_vale;
+  let h_valve = req.body.h_valve;
+  let c_valve = req.body.c_valve;
   let temp = req.body.temp;
   let water_level =req.body.water_level;
   let spkler = req.body.spkler;
@@ -231,7 +232,7 @@ router.post('/history',function(req,res,next){
   let led_bright =req.body.led_bright;
 
 
-  connection.query("insert into user_history values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ", [schedule_id,bath_id,user_id,start_time,end_time,avg_temp,is_shower,state,h_vale,c_vale,temp,water_level,spkler,c_vale,fan_onoff,fan_speed,heat,led_onoff,led_color,led_bright], (error, rows, fields) => {
+  connection.query("insert into user_history values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ", [schedule_id,bath_id,user_id,start_time,end_time,avg_temp,is_shower,state,h_valve,c_valve,temp,water_level,spkler,cap,fan_onoff,fan_speed,heat,led_onoff,led_color,led_bright], (error, rows, fields) => {
     if (error) {
       console.log(error);
     }

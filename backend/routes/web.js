@@ -1,17 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'smart_bath'
-});
-
-connection.connect();
-//바스 정보 올리고 받기
-//스케줄 정보 받기
+var db_config  = require(__dirname+'/../config/database.js');
+var connection = db_config .init();
+db_config.connect(connection);
 
 
 //아두이노 전체 데이터 들고오기
@@ -19,12 +11,12 @@ router.get('/data/:id', function (req, res, next) {
   let {
     id
   } = req.params;
-  sql_staring = 'select * from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
-
+ 
+    sql_staring = 'select * from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
 });
 
 //아두이노 상태 데이터 들고오기
@@ -40,11 +32,11 @@ router.get('/state/:id', function (req, res, next) {
 });
 
 //아두이노 온수 밸브 데이터 들고오기
-router.get('/h_vale/:id', function (req, res, next) {
+router.get('/h_valve/:id', function (req, res, next) {
   let {
     id
   } = req.params;
-  sql_staring = 'select h_vale from bath where bath_id = ';
+  sql_staring = 'select h_valve from bath where bath_id = ';
   sql_staring += id;
   connection.query(sql_staring, (error, rows, fields) => {
     res.send(rows);
@@ -52,11 +44,11 @@ router.get('/h_vale/:id', function (req, res, next) {
 });
 
 //아두이노 냉수 밸브 데이터 들고오기
-router.get('/h_vale/:id', function (req, res, next) {
+router.get('/c_valve/:id', function (req, res, next) {
   let {
     id
   } = req.params;
-  sql_staring = 'select c_vale from bath where bath_id = ';
+  sql_staring = 'select c_valve from bath where bath_id = ';
   sql_staring += id;
   connection.query(sql_staring, (error, rows, fields) => {
     res.send(rows);
@@ -184,24 +176,24 @@ router.get('/led_bright/:id', function (req, res, next) {
 });
 
 //얘약 설정
-router.post('/schedule',function(req,res,next){
+router.post('/schedule', function (req, res, next) {
   let user_id = req.body.user_id;
   let bath_id = req.body.bath_id;
-  let h_vale = req.body.h_vale;
-  let c_vale = req.body.c_vale;
+  let h_valve = req.body.h_valve;
+  let c_valve = req.body.c_valve;
   let temp = req.body.temp;
-  let water_level =req.body.water_level;
+  let water_level = req.body.water_level;
   let spkler = req.body.spkler;
   let cap = req.body.cap;
   let fan_onoff = req.body.fan_onoff;
   let fan_speed = req.body.fan_speed;
   let heat = req.body.heat;
-  let led_onoff =req.body.led_onoff;
-  let led_color =req.body.led_color;
-  let led_bright =req.body.led_bright;
+  let led_onoff = req.body.led_onoff;
+  let led_color = req.body.led_color;
+  let led_bright = req.body.led_bright;
 
 
-  connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", [user_id, bath_id,h_vale,c_vale,temp,water_level,spkler,c_vale,fan_onoff,fan_speed,heat,led_onoff,led_color,led_bright], (error, rows, fields) => {
+  connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", [user_id, bath_id, h_valve, c_valve, temp, water_level, spkler, cap, fan_onoff, fan_speed, heat, led_onoff, led_color, led_bright], (error, rows, fields) => {
     if (error) {
       console.log(error);
     }
