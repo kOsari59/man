@@ -1,182 +1,270 @@
 var express = require('express');
+const { check } = require('../config/api');
 var router = express.Router();
 
-var db_config  = require(__dirname+'/../config/database.js');
-var connection = db_config .init();
+var db_config = require(__dirname + '/../config/database.js');
+var connection = db_config.init();
 db_config.connect(connection);
 
 
 //아두이노 전체 데이터 들고오기
-router.get('/data/:id', function (req, res, next) {
+router.get('/:api/data/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
- 
+  if (check(api)) {
     sql_staring = 'select * from bath where bath_id = ';
     sql_staring += id;
     connection.query(sql_staring, (error, rows, fields) => {
       res.send(rows);
     });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 상태 데이터 들고오기
-router.get('/state/:id', function (req, res, next) {
+router.get('/:api/state/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select state from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select state from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 온수 밸브 데이터 들고오기
-router.get('/h_valve/:id', function (req, res, next) {
+router.get('/:api/h_valve/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select h_valve from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select h_valve from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 냉수 밸브 데이터 들고오기
-router.get('/c_valve/:id', function (req, res, next) {
+router.get('/:api/c_valve/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select c_valve from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select c_valve from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 온도 데이터 들고오기
-router.get('/temp/:id', function (req, res, next) {
+router.get('/:api/temp/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select temp from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select temp from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 물높이 데이터 들고오기
-router.get('/water_level/:id', function (req, res, next) {
+router.get('/:api/water_level/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select water_level from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select water_level from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 스피커 데이터 들고오기
-router.get('/spkler/:id', function (req, res, next) {
+router.get('/:api/spkler/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select spkler from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select spkler from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 마개 데이터 들고오기
-router.get('/cap/:id', function (req, res, next) {
+router.get('/:api/cap/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select cap from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select cap from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  } else {
+    res.send("실패");
+  }
 });
 
 //아두이노 팬 데이터 들고오기
-router.get('/fan_onoff/:id', function (req, res, next) {
+router.get('/:api/fan_onoff/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select fan_onoff from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select fan_onoff from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 팬 속도 들고오기
-router.get('/fan_speed/:id', function (req, res, next) {
+router.get('/:api/fan_speed/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select fan_speed from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select fan_speed from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  } else {
+    res.send("실패");
+  }
+
 });
 
 //아두이노 열선 데이터 들고오기
-router.get('/heat/:id', function (req, res, next) {
+router.get('/:api/heat/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select heat from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select heat from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 led_onoff 데이터 들고오기
-router.get('/led_onoff/:id', function (req, res, next) {
+router.get('/:api/led_onoff/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select led_onoff from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select led_onoff from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 led_color 데이터 들고오기
-router.get('/led_color/:id', function (req, res, next) {
+router.get('/:api/led_color/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select led_color from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select led_color from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //아두이노 led_bright 데이터 들고오기
-router.get('/led_bright/:id', function (req, res, next) {
+router.get('/:api/led_bright/:id', function (req, res, next) {
   let {
-    id
+    id,
+    api
   } = req.params;
-  sql_staring = 'select led_bright from bath where bath_id = ';
-  sql_staring += id;
-  connection.query(sql_staring, (error, rows, fields) => {
-    res.send(rows);
-  });
+  if (check(api)) {
+    sql_staring = 'select led_bright from bath where bath_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 //얘약 설정
-router.post('/schedule', function (req, res, next) {
+router.post('/:api/schedule', function (req, res, next) {
+
+  let {
+    api
+  } = req.params;
+
   let user_id = req.body.user_id;
   let bath_id = req.body.bath_id;
   let h_valve = req.body.h_valve;
@@ -192,13 +280,17 @@ router.post('/schedule', function (req, res, next) {
   let led_color = req.body.led_color;
   let led_bright = req.body.led_bright;
 
-
-  connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", [user_id, bath_id, h_valve, c_valve, temp, water_level, spkler, cap, fan_onoff, fan_speed, heat, led_onoff, led_color, led_bright], (error, rows, fields) => {
-    if (error) {
-      console.log(error);
-    }
-    res.send(rows);
-  })
+  if (check(api)) {
+    connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", [user_id, bath_id, h_valve, c_valve, temp, water_level, spkler, cap, fan_onoff, fan_speed, heat, led_onoff, led_color, led_bright], (error, rows, fields) => {
+      if (error) {
+        console.log(error);
+      }
+      res.send(rows);
+    })
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 
