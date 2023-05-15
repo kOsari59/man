@@ -1,10 +1,10 @@
 <!--상세 기능 탭 페이지-->
 <template>
   <div class="">
-    <h1>상세 기능</h1>
+    <header>상세 기능</header>
 
     <!--buttons-->
-    <div>
+    <div class="button-container">
       <button @click="coldWater">냉수</button>
       <button @click="hotWater">온수</button>
       <button @click="clean">청소</button>
@@ -20,6 +20,7 @@ export default {
   components: {
     Footer,
   },
+
   methods: {
     coldWater: function () {
       console.log("냉수");
@@ -36,3 +37,22 @@ export default {
   },
 };
 </script>
+<style scoped>
+header {
+  height: 50px;
+  font-size: 24px;
+  padding: 3%;
+  margin-bottom: 40px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button-container button {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+</style>

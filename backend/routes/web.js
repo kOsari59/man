@@ -279,9 +279,10 @@ router.post('/:api/schedule', function (req, res, next) {
   let led_onoff = req.body.led_onoff;
   let led_color = req.body.led_color;
   let led_bright = req.body.led_bright;
-
+  let clean_time = req.body.clean_time;
+  let start_time = req.body.start_time;
   if (check(api)) {
-    connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", [user_id, bath_id, h_valve, c_valve, temp, water_level, spkler, cap, fan_onoff, fan_speed, heat, led_onoff, led_color, led_bright], (error, rows, fields) => {
+    connection.query("insert into user_schedule values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ", [user_id, bath_id, h_valve, c_valve, temp, water_level, spkler, cap, fan_onoff, fan_speed, heat, led_onoff, led_color, led_bright,clean_time,start_time], (error, rows, fields) => {
       if (error) {
         console.log(error);
       }

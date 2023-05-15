@@ -10,6 +10,7 @@
         v-model="selections"
         style="width: 25%"
         class="left_box scrollpicker"
+        @update:modelValue = "update"
       />
       <span class="second">초</span>
     </div>
@@ -18,7 +19,6 @@
 <script>
 import "@vueform/toggle/themes/default.css";
 import { defineComponent, reactive, toRefs } from "vue";
-
 const scrollpickerOptions = [
   [
     {
@@ -70,6 +70,13 @@ export default defineComponent({
     return {
       ...toRefs(state),
     };
+  },
+  methods: {
+    //상위 컴포넌트(홈 뷰)에 정보 전송
+    update() {
+      this.$emit("cleanToggle", this.value);
+      this.$emit("cleanTime", this.selections);
+    },
   },
 });
 </script>

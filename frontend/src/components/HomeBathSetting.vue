@@ -42,6 +42,7 @@ export default {
   },
   setup() {
     //슬라이더의 값(목욕 온도, 물 높이) 외부로 값을 빼야함
+
     const data = reactive({ tempvalue: 40, levelvalue: 80 });
     return toRefs(data);
   },
