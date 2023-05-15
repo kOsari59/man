@@ -5,8 +5,8 @@
     <HomeBath class="header" :isScroll="isScroll" :bathImg="bathImg" :nowTemp="nowTemp" :nowWaterLevel="nowWaterLevel" />
     <!-- ++++++++양방향 데이터 바인딩 해야함+++++++++ -->
     <div class="content">
-      <HomeBathSetting :setTemp="setTemp" :setWaterLevel="setWaterLevel" />
-      <HomeCleanSetting @cleanTime ="pp"/>
+      <HomeBathSetting @settingbath="bathsetting"/>
+      <HomeCleanSetting @cleanTime ="cleansetting"/>
       <HomeReserveSetting />
     </div>
     <Footer />
@@ -81,7 +81,14 @@ export default {
         return bathpng;
       }
     },
-    pp(selections){
+    bathsetting(tempvalue,levelvalue){
+      console.log("바스세팅 적용");
+      this.setTemp = tempvalue;
+      this.setWaterLevel =levelvalue;
+      console.log(this.setTemp);
+      console.log(this.setWaterLevel);
+    },
+    cleansetting(selections){
       console.log("변경이벤트 적용");
       this.cleanTime = selections;
       console.log(this.cleanTime[0]);
@@ -91,7 +98,6 @@ export default {
       this.$http.post('/api/web/5948/schedule', {
         "schedule_id": "3",
         "start_time": "2023-05-10 22:13:27",
-        "end_time": "2023-05-10 22:13:40",
         "avg_temp": "30",
         "is_shower": "1",
         "state": "1",
@@ -99,8 +105,8 @@ export default {
         "bath_id": "1",
         "h_valve": "1",
         "c_valve": "1",
-        "temp": "40",
-        "water_level": "50",
+        "temp": this.setTemp,
+        "water_level": this.setWaterLevel,
         "spkler": "1",
         "cap": "1",
         "fan_onoff": "1",

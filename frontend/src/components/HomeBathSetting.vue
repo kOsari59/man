@@ -13,6 +13,7 @@
         :min="35"
         :max="45"
         :interval="1"
+        @change ="changess"
       />
     </div>
 
@@ -27,6 +28,7 @@
         :min="30"
         :max="100"
         :interval="10"
+        @change ="changess"
       />
     </div>
   </div>
@@ -45,6 +47,13 @@ export default {
 
     const data = reactive({ tempvalue: 40, levelvalue: 80 });
     return toRefs(data);
+  },
+  methods: {
+    //상위 컴포넌트(홈 뷰)에 정보 전송
+    changess() {
+      //지연추가
+        this.$emit("settingbath", this.tempvalue,this.levelvalue);
+    },
   },
 };
 </script>
