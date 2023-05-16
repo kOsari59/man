@@ -5,9 +5,10 @@
     <HomeBath class="header" :isScroll="isScroll" :bathImg="bathImg" :nowTemp="nowTemp" :nowWaterLevel="nowWaterLevel" />
     <!-- ++++++++양방향 데이터 바인딩 해야함+++++++++ -->
     <div class="content">
-      <HomeBathSetting @settingbath="bathsetting"/>
-      <HomeCleanSetting @cleanTime ="cleansetting"/>
-      <HomeReserveSetting />
+      <HomeBathSetting @settingbath="bathsetting" />
+
+      <HomeCleanSetting @cleanTime="cleansetting" />
+      <HomeReserveSetting @update_time="update_time" />
     </div>
     <Footer />
     <img class="bathstart" src="../assets/play.png" v-on:click="bStart" />
@@ -59,6 +60,7 @@ export default {
       //HomeReserveSetting 컴포넌트와 주고 받을 데이터
       reserveToggle: false,
       reserveTime: [0, 30],
+
     };
   },
   methods: {
@@ -81,23 +83,52 @@ export default {
         return bathpng;
       }
     },
-    bathsetting(tempvalue,levelvalue){
-      console.log("바스세팅 적용");
+    bathsetting(tempvalue, levelvalue) {
+      console.log("물 온도 높이 변경");
       this.setTemp = tempvalue;
-      this.setWaterLevel =levelvalue;
+      this.setWaterLevel = levelvalue;
       console.log(this.setTemp);
       console.log(this.setWaterLevel);
     },
-    cleansetting(selections){
+    update_time(houre, minnute) {
+      
+      this.reserveTime[0] = houre[0];
+      this.reserveTime[1] = minnute[0];
+      console.log(this.reserveTime[0]);
+      console.log(this.reserveTime[1]);
+
+
+    },
+    cleansetting(selections) {
       console.log("변경이벤트 적용");
       this.cleanTime = selections;
       console.log(this.cleanTime[0]);
     },
     //목욕 시작 명령
     bStart: function () {
+      var today = new Date();
+      today.setHours(today.getHours()+this.reserveTime[0]);
+      today.setMinutes(today.getMinutes()+this.reserveTime[1]);
+
+      
+
+      var year = today.getFullYear();
+      var month = ('0' + (today.getMonth() + 1)).slice(-2);
+      var day = ('0' + today.getDate()).slice(-2);
+
+      var dateString = year + '-' + month + '-' + day;
+
+      var hours = ('0' + today.getHours()).slice(-2);
+      var minutes = ('0' + today.getMinutes()).slice(-2);
+      var seconds = ('0' + today.getSeconds()).slice(-2);
+
+      var timeString = hours + ':' + minutes + ':' + seconds;
+      console.log(dateString);
+      console.log(timeString);
+      
       this.$http.post('/api/web/5948/schedule', {
         "schedule_id": "3",
-        "start_time": "2023-05-10 22:13:27",
+        "start_time": dateString+" "+timeString,
         "avg_temp": "30",
         "is_shower": "1",
         "state": "1",

@@ -9,12 +9,14 @@
         :options="houroptions"
         v-model="hourselections"
         class="left_box scrollpicker"
+        @update:modelValue = "update_hour"
       />
       <span class="left_box span_text">시</span>
       <scroll-picker
         :options="minuteoptions"
         v-model="minuteselections"
         class="left_box scrollpicker"
+        @update:modelValue = "update_minnute"
       />
       <span class="left_box span_text">분 후</span>
     </div>
@@ -120,6 +122,17 @@ export default defineComponent({
     return {
       ...toRefs(state),
     };
+  },
+  methods: {
+    //상위 컴포넌트(홈 뷰)에 정보 전송
+    update_minnute() {
+      //지연추가
+        this.$emit("update_time", this.hourselections,this.minuteselections);
+    },
+    update_hour() {
+      //지연추가
+        this.$emit("update_time", this.hourselections,this.minuteselections);
+    },
   },
 });
 </script>

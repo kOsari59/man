@@ -13,7 +13,7 @@
         :min="35"
         :max="45"
         :interval="1"
-        @change ="changess"
+        @drag-end ="changess"
       />
     </div>
 
@@ -28,7 +28,7 @@
         :min="30"
         :max="100"
         :interval="10"
-        @change ="changess"
+        @drag-end ="changess"
       />
     </div>
   </div>
