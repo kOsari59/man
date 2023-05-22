@@ -2,7 +2,9 @@
   <!--isScroll이 true일 시, Scroll클래스 삽입-->
   <div class="component" :class="{ Scroll: this.isScroll }">
     <!--스크롤에 따라 이미지가 바뀜-->
-    <img id="bathstate" v-bind:src="`${this.bathImg}`" />
+    <div class="img_box">
+      <img id="bathstate" v-bind:src="`${this.bathImg}`" />
+    </div>
     <hr />
     <div class="text">
       <div>물 온도 {{ temp }} °C</div>
