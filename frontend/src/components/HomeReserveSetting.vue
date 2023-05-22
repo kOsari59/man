@@ -149,10 +149,17 @@ export default defineComponent({
 .right_box {
   float: right;
 }
-.span_text {
-  line-height: 150px;
+.content_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3%;
 }
 .scrollpicker {
   z-index: 0;
+  margin: 5% auto;
+}
+.span_text {
+  font-size: 130%;
 }
 </style>

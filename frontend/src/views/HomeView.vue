@@ -6,7 +6,6 @@
     <!-- ++++++++양방향 데이터 바인딩 해야함+++++++++ -->
     <div class="content">
       <HomeBathSetting @settingbath="bathsetting" />
-
       <HomeCleanSetting @cleanTime="cleansetting" />
       <HomeReserveSetting @update_time="update_time" />
     </div>
@@ -161,23 +160,20 @@ export default {
 .home {
   background-color: rgb(247, 247, 247);
 }
-
 .box {
   border-radius: 5%;
   background-color: white;
   margin: 3% 2%;
   padding: 3%;
 }
-
 .header {
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  transition: 0.3s ease-in-out;
+  transition: 0.5s ease-in-out;
   z-index: 1;
 }
-
 .bathstart {
   width: 50px;
   position: fixed;
@@ -188,5 +184,21 @@ export default {
 
 .content {
   margin-bottom: 30%;
+}
+/* 태블릿 */
+@media (min-width: 768px) {
+  .bathstart {
+    bottom: 10%;
+    right: 10%;
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .bathstart {
+    bottom: 10%;
+    left: 50%;
+    transform: translate(700%, 0);
+  }
 }
 </style>

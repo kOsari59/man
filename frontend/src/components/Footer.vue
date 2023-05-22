@@ -18,10 +18,9 @@
   bottom: 0;
   position: fixed;
   display: flex;
+  height: 50px;
   width: 100%;
-  height: 3%;
-  padding: 6% 0;
-  background: #f6f6f6;
+  background-color: rgb(247, 247, 247);
   z-index: 1;
   justify-content: space-evenly;
 }
@@ -35,5 +34,17 @@
 
 .nav a.router-link-exact-active {
   color: #42b983;
+}
+
+/* 태블릿 */
+@media (min-width: 768px) {
+}
+
+/* 데스크탑 */
+@media (min-width: 1024px) {
+  .nav {
+    height: 50px;
+    width: 1024px;
+  }
 }
 </style>

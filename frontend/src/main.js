@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 
-//컴포넌트 전역 등록(토글버튼, 스크롤 픽커)
+//컴포넌트 전역 등록(토글버튼, 스크롤 픽커, 캘린더)
 import Toggle from "@vueform/toggle";
 import ScrollPicker from 'vue3-scroll-picker';
+import { setupCalendar } from 'v-calendar';
 
 /* 이모티콘 import*/
 import { library } from '@fortawesome/fontawesome-svg-core';
