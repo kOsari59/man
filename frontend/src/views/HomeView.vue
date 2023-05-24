@@ -55,7 +55,7 @@ export default {
       setWaterLevel: 80,
       //HomeCleanSetting 컴포넌트와 주고 받을 데이터
       cleanToggle: false,
-      cleanTime: 30,
+      cleanTime: [30,0],
       //HomeReserveSetting 컴포넌트와 주고 받을 데이터
       reserveToggle: false,
       reserveTime: [0, 30],
@@ -122,30 +122,16 @@ export default {
       var seconds = ('0' + today.getSeconds()).slice(-2);
 
       var timeString = hours + ':' + minutes + ':' + seconds;
-      console.log(dateString);
-      console.log(timeString);
-      
-      this.$http.post('/api/web/5948/schedule', {
-        "schedule_id": "3",
-        "start_time": dateString+" "+timeString,
-        "avg_temp": "30",
-        "is_shower": "1",
-        "state": "1",
-        "user_id": "1",
-        "bath_id": "1",
-        "h_valve": "1",
-        "c_valve": "1",
+      console.log("클린타임");
+      console.log(this.cleanTime[0]);
+     
+      this.$http.post( "/api/web/"+this.$api+"/schedule", {
+        "starttime": dateString+" "+timeString,
+        "userid": "1",
+        "bathid": "1",
         "temp": this.setTemp,
-        "water_level": this.setWaterLevel,
-        "spkler": "1",
-        "cap": "1",
-        "fan_onoff": "1",
-        "fan_speed": "1",
-        "heat": "1",
-        "led_onoff": "1",
-        "led_color": "1",
-        "led_bright": "1",
-        "clean_time": this.cleanTime[0],
+        "waterlevel": this.setWaterLevel,
+        "cleantime": this.cleanTime[0]
       }).then((res) => {
         console.log(res);
       })

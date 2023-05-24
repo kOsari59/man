@@ -149,6 +149,15 @@ export default {
     this.handleScroll = _.throttle(this.checkBottom, 2000);
     window.addEventListener("scroll", this.handleScroll);
   },
+  created(){
+    
+    this.$http.get("/api/web/"+this.$api+"/history/1").then((res)=>{
+        console.log(res.data);
+      })  
+      .catch((err)=>{
+        console.error(err);
+      });
+  },
   methods: {
     checkBottom(event) {
       let isBottom =

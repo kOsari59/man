@@ -20,18 +20,104 @@ export default {
   components: {
     Footer,
   },
-
+  data() {
+    return {
+      cvalve : 0,
+      hvalve : 0,
+      clean_v : 0,
+      cap_V : 0
+    };
+  },
   methods: {
     coldWater: function () {
-      console.log("냉수");
+      if(this.cvalve == 0 ){
+        this.cvalve = 1;
+      }else{
+        this.cvalve = 0;
+      }
+      
+      this.$http.post("/api/web/"+this.$api+"/control", {
+        "userid": "1",
+        "bathid": "1",
+        "cap": this.cap_V,
+        "cvalve": this.cvalve,
+        "hvalve": this.hvalve,
+        "cleantime": this.clean_v
+      }).then((res) => {
+        console.log(res);
+      })
+        .catch((err) => {
+          console.error("안녕");
+        });
+
+        console.log("냉수");
     },
     hotWater: function () {
-      console.log("온수");
+      if(this.hvalve == 0 ){
+        this.hvalve = 1;
+      }else{
+        this.hvalve = 0;
+      }
+      this.$http.post("/api/web/"+this.$api+"/control", {
+        "userid": "1",
+        "bathid": "1",
+        "cap": this.cap_V,
+        "cvalve": this.cvalve,
+        "hvalve": this.hvalve,
+        "cleantime": this.clean_v
+      }).then((res) => {
+        console.log(res);
+      })
+        .catch((err) => {
+          console.error("안녕");
+        });
+
+        console.log("온수");
     },
     clean: function () {
+
+      if(this.clean_v == 0 ){
+        this.clean_v = 15;
+      }else{
+        this.clean_v = 0;
+      }
+      this.$http.post("/api/web/"+this.$api+"/control", {
+        "userid": "1",
+        "bathid": "1",
+        "cap": this.cap_V,
+        "cvalve": this.cvalve,
+        "hvalve": this.hvalve,
+        "cleantime": this.clean_v
+      }).then((res) => {
+        console.log(res);
+      })
+        .catch((err) => {
+          console.error("안녕");
+        });
+
       console.log("청소");
     },
     cap: function () {
+
+      if(this.cap_V == 0 ){
+        this.cap_V = 1;
+      }else{
+        this.cap_V = 0;
+      }
+      this.$http.post("/api/web/"+this.$api+"/control", {
+        "userid": "1",
+        "bathid": "1",
+        "cap": this.cap_V,
+        "cvalve": this.cvalve,
+        "hvalve": this.hvalve,
+        "cleantime": this.clean_v
+      }).then((res) => {
+        console.log(res);
+      })
+        .catch((err) => {
+          console.error("안녕");
+        });
+
       console.log("cap");
     },
   },

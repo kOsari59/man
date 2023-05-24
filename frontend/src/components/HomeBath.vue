@@ -24,10 +24,11 @@ export default {
   },
   methods: {
     function () {
-      this.$http.get('/api/reflash').then((res)=>{
+      
+      this.$http.get("/api/web/"+this.$api+"/bath/1").then((res)=>{
         console.log(res.data);
         this.temp=res.data[0].temp;
-        this.waterlevel = res.data[0].water_level;
+        this.waterlevel = res.data[0].waterlevel;
       })  
       .catch((err)=>{
         console.error(err);
@@ -35,7 +36,7 @@ export default {
     },
   },
   created(){
-    setInterval(this.function, 100000);
+    setInterval(this.function, 1000);
   },
   //상위 컴포넌트(HomeView)에서 받은 데이터
   props: ["isScroll", "bathImg"],

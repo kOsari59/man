@@ -2,21 +2,11 @@ var express = require('express');
 const { check } = require('../config/api');
 var router = express.Router();
 
-// const mysql = require('mysql2');
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '1234',
-//   database: 'smart_bath'
-// });
 
-// connection.connect();
-// //바스 정보 올리고 받기
-// //스케줄 정보 받기
 var db_config = require(__dirname + '/../config/database.js');
 var connection = db_config.init();
 db_config.connect(connection);
-process.env.DATABASE_HOST
+
 
 
 //아두이노가 예약 정보 읽어 오기 (bath_id로)
@@ -86,6 +76,32 @@ router.post('/:api/update', function (req, res, next) {
     [bathid, state, temp, waterlevel, cap, 
       hvalve, cvalve, spkler, fanonoff, fanspeed, 
       heat, ledonoff, ledbright, ledcolor], (error, rows, fields) => {
+      if (error) {
+        console.log(error);
+      }
+      res.send(rows);
+    });
+  } else {
+    res.send("실패");
+  }
+});
+
+//아두이노가 상태정보 남기기
+router.post('/:api/history', function (req, res, next) {
+  let {
+    api
+  } = req.params;
+  let bathid = req.body.bathid;
+  let userid = req.body.userid;
+  let start_time = req.body.start_time;
+  let end_time = req.body.end_time;
+  let avg_temp = req.body.avg_temp;
+  let is_shower = req.body.is_shower;
+
+
+  if (check(api)) {
+    connection.query("insert into User_History values(null,?,?,?,?,?,?); ", 
+    [bathid,userid,start_time,end_time,avg_temp,is_shower], (error, rows, fields) => {
       if (error) {
         console.log(error);
       }

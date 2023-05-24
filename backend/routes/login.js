@@ -12,21 +12,21 @@ var router = express.Router();
 
 //DB에 있는 데이터 전송시에 사용
 
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-  host:'localhost',
-  user:'root',
-  password :'1234',
-  database:'smart_bath'
-});
+// const mysql = require('mysql2');
+// const connection = mysql.createConnection({
+//   host:'localhost',
+//   user:'root',
+//   password :'1234',
+//   database:'smart_bath'
+// });
 
-connection.connect();
+// connection.connect();
 
 router.get('/', function(req, res, next) {
-  connection.query('select * from user',(error,rows,fields)=>{
-    if(error) throw error;
-    res.send(rows);  
-  });
+  // connection.query('select * from user',(error,rows,fields)=>{
+  //   if(error) throw error;
+  //   res.send(rows);  
+  // });
 });
 
 module.exports = router;

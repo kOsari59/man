@@ -9,6 +9,7 @@
         :options="options"
         v-model="selections"
         class="scrollpicker"
+        @update:modelValue = "update"
       />
       <span class="second">초</span>
     </div>

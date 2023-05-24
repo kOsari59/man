@@ -101,5 +101,23 @@ router.post('/:api/control', function (req, res, next) {
 });
 
 
+//아두이노 모든 데이터
+router.get('/:api/history/:id', function (req, res, next) {
+  let {
+    id,
+    api
+  } = req.params;
+  if (check(api)) {
+    sql_staring = 'select * from User_History where user_id = ';
+    sql_staring += id;
+    connection.query(sql_staring, (error, rows, fields) => {
+      res.send(rows);
+    });
+  }
+  else {
+    res.send("실패");
+  }
+});
+
 
 module.exports = router;
