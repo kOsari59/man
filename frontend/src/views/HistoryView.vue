@@ -150,7 +150,8 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   created(){
-    this.$http.get('api/web/{api}/history/1').then((res)=>{
+    
+    this.$http.get("/web/"+this.$api+"/history/1").then((res)=>{
         console.log(res.data);
       })  
       .catch((err)=>{

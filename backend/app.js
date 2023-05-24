@@ -23,10 +23,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api/login', loginRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
-app.use('/api/reflash', reflashRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
-app.use('/api/arduino', arduinoRouter);
-app.use('/api/web', webRouter);
+app.use('/login', loginRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
+app.use('/reflash', reflashRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
+app.use('/arduino', arduinoRouter);
+app.use('/web', webRouter);
 app.use(bodyParser.urlencoded({ extended: false}));
 
 

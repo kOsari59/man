@@ -125,7 +125,7 @@ export default {
       console.log("클린타임");
       console.log(this.cleanTime[0]);
      
-      this.$http.post( "api/web/"+this.$api+"/schedule", {
+      this.$http.post( "/web/"+this.$api+"/schedule", {
         "starttime": dateString+" "+timeString,
         "userid": "1",
         "bathid": "1",

@@ -25,7 +25,7 @@ export default {
   methods: {
     function () {
       
-      this.$http.get("api/web/"+this.$api+"/bath/1").then((res)=>{
+      this.$http.get("/web/"+this.$api+"/bath/1").then((res)=>{
         console.log(res.data);
         this.temp=res.data[0].temp;
         this.waterlevel = res.data[0].waterlevel;
