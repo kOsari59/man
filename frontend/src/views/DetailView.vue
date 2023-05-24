@@ -36,7 +36,7 @@ export default {
         this.cvalve = 0;
       }
       
-      this.$http.post("/api/web/"+this.$api+"/control", {
+      this.$http.post("api/web/"+this.$api+"/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -58,7 +58,7 @@ export default {
       }else{
         this.hvalve = 0;
       }
-      this.$http.post("/api/web/"+this.$api+"/control", {
+      this.$http.post("api/web/"+this.$api+"/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -81,7 +81,7 @@ export default {
       }else{
         this.clean_v = 0;
       }
-      this.$http.post("/api/web/"+this.$api+"/control", {
+      this.$http.post("api/web/"+this.$api+"/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -104,7 +104,7 @@ export default {
       }else{
         this.cap_V = 0;
       }
-      this.$http.post("/api/web/"+this.$api+"/control", {
+      this.$http.post("api/web/"+this.$api+"/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
