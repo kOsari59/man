@@ -39,6 +39,7 @@ router.get('/:api/control/:id', function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from control where bathid = ';
     sql_staring += id;
+    sql_staring +='order by date desc'
     connection.query(sql_staring, (error, rows, fields) => {
       res.send(rows);
     });
