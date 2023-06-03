@@ -126,7 +126,7 @@ export default {
       console.log(this.cleanTime[0]);
      
       this.$http.post( "/web/"+this.$api+"/schedule", {
-        "starttime": dateString+" "+timeString,
+        "start_time": dateString+" "+timeString,
         "userid": "1",
         "bathid": "1",
         "temp": this.setTemp,

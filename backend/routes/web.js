@@ -26,7 +26,7 @@ router.get('/:api/bath/:id', async function (req, res, next) {
   }
 });
 
-//아두이노 모든 데이터
+//아두이노 상세 데이터
 router.get('/:api/bath_info/:id', async function (req, res, next) {
   logger.info('get web/:api/bath_info/:id');
   let {
@@ -106,7 +106,7 @@ router.post('/:api/control', async function (req, res, next) {
 });
 
 
-//아두이노 모든 데이터
+//아두이노 기록 최신 데이터
 router.get('/:api/history/:id', async function (req, res, next) {
   logger.info('get web/:api/history/:id');
   let {
@@ -125,5 +125,22 @@ router.get('/:api/history/:id', async function (req, res, next) {
   }
 });
 
+//아두이노 기록 모든 데이터
+router.get('/:api/history_all/:id', async function (req, res, next) {
+  logger.info('get web/:api/history/:id');
+  let {
+    id,
+    api
+  } = req.params;
+  if (check(api)) {
+    sql_staring = 'select * from User_History where user_id = ';
+    sql_staring += id;
+    let result = await mysql(sql_staring);
+    res.send(result);
+  }
+  else {
+    res.send("실패");
+  }
+});
 
 module.exports = router;
