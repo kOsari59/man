@@ -2,13 +2,15 @@ var express = require('express');
 const { check } = require('../config/api');
 var router = express.Router();
 
-var db_config = require(__dirname + '/../config/database.js');
-var connection = db_config.init();
-db_config.connect(connection);
 
+const mysql = require(__dirname + '/../config/runQuery');
+
+//로그 설정
+const logger = require(__dirname +'/../config/winton');
 
 //아두이노 메인 데이터
-router.get('/:api/bath/:id', function (req, res, next) {
+router.get('/:api/bath/:id', async function (req, res, next) {
+  logger.info('get web/:api/bath/:id');
   let {
     id,
     api
@@ -16,9 +18,8 @@ router.get('/:api/bath/:id', function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from bath where id = ';
     sql_staring += id;
-    connection.query(sql_staring, (error, rows, fields) => {
-      res.send(rows);
-    });
+    let result = await mysql(sql_staring);
+    res.send(result);
   }
   else {
     res.send("실패");
@@ -26,7 +27,8 @@ router.get('/:api/bath/:id', function (req, res, next) {
 });
 
 //아두이노 모든 데이터
-router.get('/:api/bath_info/:id', function (req, res, next) {
+router.get('/:api/bath_info/:id', async function (req, res, next) {
+  logger.info('get web/:api/bath_info/:id');
   let {
     id,
     api
@@ -34,9 +36,8 @@ router.get('/:api/bath_info/:id', function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from bath_info where bathid = ';
     sql_staring += id;
-    connection.query(sql_staring, (error, rows, fields) => {
-      res.send(rows);
-    });
+    let result = await mysql(sql_staring);
+    res.send(result);
   }
   else {
     res.send("실패");
@@ -45,8 +46,8 @@ router.get('/:api/bath_info/:id', function (req, res, next) {
 
 
 //예약 설정
-router.post('/:api/schedule', function (req, res, next) {
-
+router.post('/:api/schedule', async function (req, res, next) {
+  logger.info('post web/:api/schedule');
   let {
     api
   } = req.params;
@@ -56,17 +57,18 @@ router.post('/:api/schedule', function (req, res, next) {
   let temp = req.body.temp;
   let waterlevel = req.body.waterlevel;
   let cleantime = req.body.cleantime;
-  let starttime = req.body.starttime;
+  let start_time = req.body.start_time;
   if (check(api)) {
-
-    connection.query("insert into schedule values(null,?,?,?,?,?,?); ", [
-      userid,bathid,temp,waterlevel,cleantime,starttime
-    ], (error, rows, fields) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(rows);
-    })
+    sql_staring = 'insert into schedule values(null,';
+    sql_staring += userid+',';
+    sql_staring += bathid+',';
+    sql_staring += temp+',';
+    sql_staring += waterlevel+',';
+    sql_staring += cleantime+',';
+    sql_staring += '\''+start_time+'\'';
+    sql_staring +=',default); ';
+    let result = await mysql(sql_staring);
+    res.send(result);
   }
   else {
     res.send("실패");
@@ -74,8 +76,8 @@ router.post('/:api/schedule', function (req, res, next) {
 });
 
 //컨트롤
-router.post('/:api/control', function (req, res, next) {
-
+router.post('/:api/control', async function (req, res, next) {
+  logger.info('post web/:api/control');
   let {
     api
   } = req.params;
@@ -87,13 +89,16 @@ router.post('/:api/control', function (req, res, next) {
   let cvalve = req.body.cvalve;
   let cleantime = req.body.cleantime;
   if (check(api)) {
-    connection.query("insert into control values(null,?,?,?,?,?,?); ", 
-    [userid,bathid,cap,hvalve,cvalve,cleantime], (error, rows, fields) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(rows);
-    })
+    sql_staring = 'insert into control values(null,';
+    sql_staring += userid+',';
+    sql_staring += bathid+',';
+    sql_staring += cap+',';
+    sql_staring += hvalve+',';
+    sql_staring += cvalve+',';
+    sql_staring += cleantime;
+    sql_staring +=',default); ';
+    let result = await mysql(sql_staring);
+    res.send(result);
   }
   else {
     res.send("실패");
@@ -102,7 +107,8 @@ router.post('/:api/control', function (req, res, next) {
 
 
 //아두이노 모든 데이터
-router.get('/:api/history/:id', function (req, res, next) {
+router.get('/:api/history/:id', async function (req, res, next) {
+  logger.info('get web/:api/history/:id');
   let {
     id,
     api
@@ -110,9 +116,9 @@ router.get('/:api/history/:id', function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from User_History where user_id = ';
     sql_staring += id;
-    connection.query(sql_staring, (error, rows, fields) => {
-      res.send(rows);
-    });
+    sql_staring +=' order by date desc limit 1'
+    let result = await mysql(sql_staring);
+    res.send(result);
   }
   else {
     res.send("실패");

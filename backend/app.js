@@ -4,11 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require('helmet');
-var loginRouter = require('./routes/login');
-var reflashRouter = require('./routes/reflash');
 var arduinoRouter = require('./routes/arduino');
 var webRouter = require('./routes/web');
 var bodyParser = require('body-parser');
+const winston = require('./config/winton');
 
 var app = express();
 
@@ -16,15 +15,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+app.use(logger('dev',{stream : winston.stream}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/login', loginRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
-app.use('/reflash', reflashRouter);//이걸로 세팅한거 이걸로 요청애서 들어줌
 app.use('/arduino', arduinoRouter);
 app.use('/web', webRouter);
 app.use(bodyParser.urlencoded({ extended: false}));

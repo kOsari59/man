@@ -16,9 +16,11 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.2.4",
+    "mysql2": "^3.3.3",
     "pug": "2.0.0-beta11",
     "uuid-apikey": "^1.5.3",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "winston": "^3.9.0",
+    "winston-daily-rotate-file": "^4.7.1"
   }
 }

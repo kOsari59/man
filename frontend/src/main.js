@@ -26,7 +26,7 @@ library.add(faHouse,faUser,faCheck,faGear,faBath,faTemperatureHalf,faPalette,faB
 
 const app = createApp(App);
 app.config.globalProperties.$http = axios;
-app.config.globalProperties.$api = process.env.VUE_APP_API;;
+app.config.globalProperties.$api = process.env.VUE_APP_API;
 app.use(router);
 app.component("Toggle",Toggle);
 app.component("ScrollPicker",ScrollPicker)

@@ -2,15 +2,15 @@ var express = require('express');
 const { check } = require('../config/api');
 var router = express.Router();
 
+const mysql = require(__dirname + '/../config/runQuery');
 
-var db_config = require(__dirname + '/../config/database.js');
-var connection = db_config.init();
-db_config.connect(connection);
-
+//로그 설정
+const logger = require(__dirname +'/../config/winton');
 
 
 //아두이노가 예약 정보 읽어 오기 (bath_id로)
-router.get('/:api/schedule/:id', function (req, res, next) {
+router.get('/:api/schedule/:id', async function (req, res, next) {
+  logger.info('get arduino/:api/schedule/:id');
   let {
     id,
     api
@@ -19,9 +19,10 @@ router.get('/:api/schedule/:id', function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from schedule where bathid = ';
     sql_staring += id;
-    connection.query(sql_staring, (error, rows, fields) => {
-      res.send(rows);
-    });
+    sql_staring +=' order by date desc limit 1'
+    
+    let result = await mysql(sql_staring);
+    res.send(result);
   } else {
     res.send("실패");
   }
@@ -30,7 +31,8 @@ router.get('/:api/schedule/:id', function (req, res, next) {
 
 
 //아두이노가 컨트롤 읽어 오기 (bath_id로)
-router.get('/:api/control/:id', function (req, res, next) {
+router.get('/:api/control/:id', async function (req, res, next) {
+  logger.info('get arduino/:api/control/:id');
   let {
     id,
     api
@@ -40,19 +42,20 @@ router.get('/:api/control/:id', function (req, res, next) {
     sql_staring = 'select * from control where bathid = ';
     sql_staring += id;
     sql_staring +=' order by date desc limit 1'
-    connection.query(sql_staring, (error, rows, fields) => {
-      res.send(rows);
-    });
-  } else {
+
+    let result = await mysql(sql_staring);
+    res.send(result);
+  }else {
     res.send("실패");
   }
 
 });
 
 
-
 //아두이노가 상태정보 남기기
-router.post('/:api/update', function (req, res, next) {
+router.post('/:api/update', async function (req, res, next) {
+
+  logger.info('post arduino/:api/update');
   let {
     api
   } = req.params;
@@ -73,22 +76,32 @@ router.post('/:api/update', function (req, res, next) {
 
 
   if (check(api)) {
-    connection.query("insert into bath_info values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default); ", 
-    [bathid, state, temp, waterlevel, cap, 
-      hvalve, cvalve, spkler, fanonoff, fanspeed, 
-      heat, ledonoff, ledbright, ledcolor], (error, rows, fields) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(rows);
-    });
+    sql_staring = 'insert into bath_info values(null,';
+    sql_staring += bathid+',';
+    sql_staring += state+',';
+    sql_staring += temp+',';
+    sql_staring += waterlevel+',';
+    sql_staring += cap+',';
+    sql_staring += hvalve+',';
+    sql_staring += cvalve+',';
+    sql_staring += spkler+',';
+    sql_staring += fanonoff+',';
+    sql_staring += fanspeed+',';
+    sql_staring += heat+',';
+    sql_staring += ledonoff+',';
+    sql_staring += ledbright+',';
+    sql_staring += ledcolor;
+    sql_staring +=' ,default); ';
+    let result = await mysql(sql_staring);
+    res.send(result);
   } else {
     res.send("실패");
   }
 });
 
 //아두이노가 상태정보 남기기
-router.post('/:api/history', function (req, res, next) {
+router.post('/:api/history', async function (req, res, next) {
+  logger.info('post arduino/:api/history');
   let {
     api
   } = req.params;
@@ -101,13 +114,16 @@ router.post('/:api/history', function (req, res, next) {
 
 
   if (check(api)) {
-    connection.query("insert into User_History values(null,?,?,?,?,?,?); ", 
-    [bathid,userid,start_time,end_time,avg_temp,is_shower], (error, rows, fields) => {
-      if (error) {
-        console.log(error);
-      }
-      res.send(rows);
-    });
+    sql_staring = 'insert into User_History values(null,';
+    sql_staring += bathid+',';
+    sql_staring += userid+',';
+    sql_staring += '\''+start_time+'\''+',';
+    sql_staring += '\''+end_time+'\''+',';
+    sql_staring += avg_temp+',';
+    sql_staring += is_shower;
+    sql_staring +='); ';
+    let result = await mysql(sql_staring);
+    res.send(result);
   } else {
     res.send("실패");
   }
