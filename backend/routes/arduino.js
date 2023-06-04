@@ -120,7 +120,7 @@ router.post('/:api/history', async function (req, res, next) {
     sql_staring += '\''+end_time+'\''+',';
     sql_staring += avg_temp+',';
     sql_staring += is_shower;
-    sql_staring +='); ';
+    sql_staring +=',default); ';
     let result = await mysql(sql_staring);
     res.send(result);
   } else {
