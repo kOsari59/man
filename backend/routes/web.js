@@ -3,10 +3,10 @@ const { check } = require('../config/api');
 var router = express.Router();
 
 
-const mysql = require(__dirname + '/../config/runQuery');
+const mysql = require(__dirname + '/../config/runQerr');
 
 //로그 설정
-const logger = require(__dirname +'/../config/winton');
+const logger = require(__dirname + '/../config/winton');
 
 //아두이노 메인 데이터
 router.get('/:api/bath/:id', async function (req, res, next) {
@@ -60,13 +60,13 @@ router.post('/:api/schedule', async function (req, res, next) {
   let start_time = req.body.start_time;
   if (check(api)) {
     sql_staring = 'insert into schedule values(null,';
-    sql_staring += userid+',';
-    sql_staring += bathid+',';
-    sql_staring += temp+',';
-    sql_staring += waterlevel+',';
-    sql_staring += cleantime+',';
-    sql_staring += '\''+start_time+'\'';
-    sql_staring +=',default); ';
+    sql_staring += userid + ',';
+    sql_staring += bathid + ',';
+    sql_staring += temp + ',';
+    sql_staring += waterlevel + ',';
+    sql_staring += cleantime + ',';
+    sql_staring += '\'' + start_time + '\'';
+    sql_staring += ',default); ';
     let result = await mysql(sql_staring);
     res.send(result);
   }
@@ -76,33 +76,35 @@ router.post('/:api/schedule', async function (req, res, next) {
 });
 
 //컨트롤
-router.post('/:api/control', async function (req, res, next) {
+router.post('/:api/control', async function ( req, res, next) {
   logger.info('post web/:api/control');
-  let {
-    api
-  } = req.params;
+    let {
+      api
+    } = req.params;
 
-  let userid = req.body.userid;
-  let bathid = req.body.bathid;
-  let cap = req.body.cap;
-  let hvalve = req.body.hvalve;
-  let cvalve = req.body.cvalve;
-  let cleantime = req.body.cleantime;
-  if (check(api)) {
-    sql_staring = 'insert into control values(null,';
-    sql_staring += userid+',';
-    sql_staring += bathid+',';
-    sql_staring += cap+',';
-    sql_staring += hvalve+',';
-    sql_staring += cvalve+',';
-    sql_staring += cleantime;
-    sql_staring +=',default); ';
-    let result = await mysql(sql_staring);
-    res.send(result);
-  }
-  else {
-    res.send("실패");
-  }
+    let userid = req.body.userid;
+    let bathid = req.body.bathid;
+    let cap = req.body.cap;
+    let hvalve = req.body.hvalve;
+    let cvalve = req.body.cvalve;
+    let cleantime = req.body.cleantime;
+    if (check(api)) {
+      sql_staring = 'insert into control values(null,';
+      sql_staring += userid + ',';
+      sql_staring += bathid + ',';
+      sql_staring += cap + ',';
+      sql_staring += hvalve + ',';
+      sql_staring += cvalve + ',';
+      sql_staring += cleantime;
+      sql_staring += ',default); ';
+
+      let result = await mysql(sql_staring);
+      res.send(result);
+
+    }
+    else {
+      res.send("실패");
+    }
 });
 
 
@@ -116,7 +118,7 @@ router.get('/:api/history/:id', async function (req, res, next) {
   if (check(api)) {
     sql_staring = 'select * from User_History where user_id = ';
     sql_staring += id;
-    sql_staring +=' order by date desc limit 1'
+    sql_staring += ' order by date desc limit 1'
     let result = await mysql(sql_staring);
     res.send(result);
   }

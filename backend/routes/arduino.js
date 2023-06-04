@@ -2,7 +2,7 @@ var express = require('express');
 const { check } = require('../config/api');
 var router = express.Router();
 
-const mysql = require(__dirname + '/../config/runQuery');
+const mysql = require(__dirname + '/../config/runQerr');
 
 //로그 설정
 const logger = require(__dirname +'/../config/winton');
@@ -20,7 +20,6 @@ router.get('/:api/schedule/:id', async function (req, res, next) {
     sql_staring = 'select * from schedule where bathid = ';
     sql_staring += id;
     sql_staring +=' order by date desc limit 1'
-    
     let result = await mysql(sql_staring);
     res.send(result);
   } else {
