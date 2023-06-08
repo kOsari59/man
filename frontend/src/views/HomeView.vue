@@ -6,8 +6,8 @@
     <!-- ++++++++양방향 데이터 바인딩 해야함+++++++++ -->
     <div class="content">
       <HomeBathSetting @settingbath="bathsetting" />
-      <HomeCleanSetting @cleanTime="cleansetting" />
-      <HomeReserveSetting @update_time="update_time" />
+      <HomeCleanSetting @cleanTime="cleansetting" @cleanToggle="cleanTogglee"/>
+      <HomeReserveSetting @update_time="update_time" @reserve_toggle="reserveTogglee" />
     </div>
     <Footer />
     <img class="bathstart" src="../assets/play.png" v-on:click="bStart" />
@@ -54,10 +54,10 @@ export default {
       setTemp: 50,
       setWaterLevel: 80,
       //HomeCleanSetting 컴포넌트와 주고 받을 데이터
-      cleanToggle: false,
+      cleanToggle: true,
       cleanTime: [30,0],
       //HomeReserveSetting 컴포넌트와 주고 받을 데이터
-      reserveToggle: false,
+      reserveToggle: true,
       reserveTime: [0, 30],
 
     };
@@ -99,15 +99,34 @@ export default {
 
     },
     cleansetting(selections) {
-      console.log("변경이벤트 적용");
+      console.log("cleantime");
       this.cleanTime = selections;
       console.log(this.cleanTime[0]);
+
+      
+    },cleanTogglee(value){
+      this.cleanToggle = value;
+      console.log("cleantoggle");
+      console.log(this.cleanToggle);
+    },
+    reserveTogglee(value){
+      this.reserveToggle = value;
+      console.log("reserveToggle");
+      console.log(this.reserveToggle);
     },
     //목욕 시작 명령
     bStart: function () {
+      if(this.cleanToggle == false){
+        this.cleanTime[0] = 0;
+      }
       var today = new Date();
-      today.setHours(today.getHours()+this.reserveTime[0]);
-      today.setMinutes(today.getMinutes()+this.reserveTime[1]);
+
+      if(this.reserveToggle){
+        today.setHours(today.getHours()+this.reserveTime[0]);
+        today.setMinutes(today.getMinutes()+this.reserveTime[1]);
+      }
+    
+      
 
       
 
@@ -122,6 +141,7 @@ export default {
       var seconds = ('0' + today.getSeconds()).slice(-2);
 
       var timeString = hours + ':' + minutes + ':' + seconds;
+
       console.log("클린타임");
       console.log(this.cleanTime[0]);
      
@@ -136,7 +156,7 @@ export default {
         console.log(res);
       })
         .catch((err) => {
-          console.error("안녕");
+          console.error("스케쥴 전달 오류");
         });
     },
   },

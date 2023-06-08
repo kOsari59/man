@@ -2,7 +2,7 @@
   <div class="box">
     <div class="title">
       <div class="left_box">예약 설정</div>
-      <Toggle v-model="value" class="right_box" />
+      <Toggle v-model="value" class="right_box" @change="change" />
     </div>
     <div style="min-height: 150px" class="content_box">
       <scroll-picker
@@ -133,6 +133,9 @@ export default defineComponent({
       //지연추가
         this.$emit("update_time", this.hourselections,this.minuteselections);
     },
+    change(){
+      this.$emit("reserve_toggle", this.value);
+    }
   },
 });
 </script>

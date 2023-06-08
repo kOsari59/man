@@ -2,7 +2,7 @@
   <div class="box">
     <div class="title">
       <div class="left_box">청소 설정</div>
-      <Toggle v-model="value" class="right_box" />
+      <Toggle v-model="value" class="right_box" @change="change" />
     </div>
     <div class="content_box">
       <scroll-picker
@@ -76,6 +76,9 @@ export default defineComponent({
       this.$emit("cleanToggle", this.value);
       this.$emit("cleanTime", this.selections);
     },
+    change(){
+      this.$emit("cleanToggle", this.value);
+    }
   },
 });
 </script>

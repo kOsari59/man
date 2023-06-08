@@ -1,7 +1,7 @@
 var express = require('express');
 const { check } = require('../config/api');
 var router = express.Router();
-
+const schedule = require('node-schedule');
 
 const mysql = require(__dirname + '/../config/runQerr');
 
@@ -59,6 +59,25 @@ router.post('/:api/schedule', async function (req, res, next) {
   let cleantime = req.body.cleantime;
   let start_time = req.body.start_time;
   if (check(api)) {
+
+  let date = new Date(start_time);
+  schedule.scheduleJob(date, async function() {
+    sql_staring = 'insert into control values(null,';
+      sql_staring += userid + ',';
+      sql_staring += bathid + ',';
+      sql_staring += '0,';
+      sql_staring += '0,';
+      sql_staring += '0,';
+      sql_staring += cleantime + ',';
+      sql_staring += temp +',';
+      sql_staring += waterlevel;
+      sql_staring += ',default); ';
+      let result = await mysql(sql_staring);
+  });
+
+
+
+
     sql_staring = 'insert into schedule values(null,';
     sql_staring += userid + ',';
     sql_staring += bathid + ',';
@@ -96,6 +115,7 @@ router.post('/:api/control', async function ( req, res, next) {
       sql_staring += hvalve + ',';
       sql_staring += cvalve + ',';
       sql_staring += cleantime;
+      sql_staring += ',default,default';
       sql_staring += ',default); ';
 
       let result = await mysql(sql_staring);

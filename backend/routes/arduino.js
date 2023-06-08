@@ -9,24 +9,26 @@ const logger = require(__dirname +'/../config/winton');
 
 
 //아두이노가 예약 정보 읽어 오기 (bath_id로)
-router.get('/:api/schedule/:id', async function (req, res, next) {
-  logger.info('get arduino/:api/schedule/:id');
-  let {
-    id,
-    api
-  } = req.params;
+// router.get('/:api/schedule/:id', async function (req, res, next) {
+//   logger.info('get arduino/:api/schedule/:id');
+//   let {
+//     id,
+//     api
+//   } = req.params;
 
-  if (check(api)) {
-    sql_staring = 'select * from schedule where bathid = ';
-    sql_staring += id;
-    sql_staring +=' order by date desc limit 1'
-    let result = await mysql(sql_staring);
-    res.send(result);
-  } else {
-    res.send("실패");
-  }
+//   if (check(api)) {
+//     sql_staring = 'select * from schedule where bathid = ';
+//     sql_staring += id;
+//     sql_staring +=' order by date desc limit 1'
+//     let result = await mysql(sql_staring);
+//     res.send(result);
+//   } else {
+//     res.send("실패");
+//   }
 
-});
+// });
+
+
 
 
 //아두이노가 컨트롤 읽어 오기 (bath_id로)
@@ -98,34 +100,35 @@ router.post('/:api/update', async function (req, res, next) {
   }
 });
 
+
 //아두이노가 상태정보 남기기
-router.post('/:api/history', async function (req, res, next) {
-  logger.info('post arduino/:api/history');
-  let {
-    api
-  } = req.params;
-  let bathid = req.body.bathid;
-  let userid = req.body.userid;
-  let start_time = req.body.start_time;
-  let end_time = req.body.end_time;
-  let avg_temp = req.body.avg_temp;
-  let is_shower = req.body.is_shower;
+// router.post('/:api/history', async function (req, res, next) {
+//   logger.info('post arduino/:api/history');
+//   let {
+//     api
+//   } = req.params;
+//   let bathid = req.body.bathid;
+//   let userid = req.body.userid;
+//   let start_time = req.body.start_time;
+//   let end_time = req.body.end_time;
+//   let avg_temp = req.body.avg_temp;
+//   let is_shower = req.body.is_shower;
 
 
-  if (check(api)) {
-    sql_staring = 'insert into User_History values(null,';
-    sql_staring += bathid+',';
-    sql_staring += userid+',';
-    sql_staring += '\''+start_time+'\''+',';
-    sql_staring += '\''+end_time+'\''+',';
-    sql_staring += avg_temp+',';
-    sql_staring += is_shower;
-    sql_staring +=',default); ';
-    let result = await mysql(sql_staring);
-    res.send(result);
-  } else {
-    res.send("실패");
-  }
-});
+//   if (check(api)) {
+//     sql_staring = 'insert into User_History values(null,';
+//     sql_staring += bathid+',';
+//     sql_staring += userid+',';
+//     sql_staring += '\''+start_time+'\''+',';
+//     sql_staring += '\''+end_time+'\''+',';
+//     sql_staring += avg_temp+',';
+//     sql_staring += is_shower;
+//     sql_staring +=',default); ';
+//     let result = await mysql(sql_staring);
+//     res.send(result);
+//   } else {
+//     res.send("실패");
+//   }
+// });
 
 module.exports = router;
