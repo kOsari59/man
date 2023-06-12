@@ -74,10 +74,7 @@ router.post('/:api/schedule', async function (req, res, next) {
       sql_staring += ',default); ';
       let result = await mysql(sql_staring);
   });
-
-
-
-
+  
     sql_staring = 'insert into schedule values(null,';
     sql_staring += userid + ',';
     sql_staring += bathid + ',';
