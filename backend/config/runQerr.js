@@ -5,7 +5,7 @@ async function runQerr(sql) {
     return await mysql(sql_staring);
   }catch(err){
     logger.error('fail query :' + sql_staring);
-    return "fail";
+    return err;
   }
 }
 

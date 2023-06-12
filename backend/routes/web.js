@@ -22,7 +22,7 @@ router.get('/:api/bath/:id', async function (req, res, next) {
     res.send(result);
   }
   else {
-    res.send("실패");
+    res.send(result);
   }
 });
 
