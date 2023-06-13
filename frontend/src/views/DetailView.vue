@@ -30,13 +30,6 @@ export default {
   },
   methods: {
     coldWater: function () {
-      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
-        console.log(res.data);
-        this.clean_v = res.data[0].cleantime;
-      })
-        .catch((err) => {
-          console.error(err);
-        });
       if (this.cvalve == 0) {
         this.cvalve = 1;
       } else {
@@ -60,13 +53,6 @@ export default {
       console.log("냉수");
     },
     hotWater: function () {
-      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
-        console.log(res.data);
-        this.clean_v = res.data[0].cleantime;
-      })
-        .catch((err) => {
-          console.error(err);
-        });
       if (this.hvalve == 0) {
         this.hvalve = 1;
       } else {
@@ -90,14 +76,6 @@ export default {
     },
     clean: function () {
 
-      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
-        console.log(res.data);
-        this.clean_v = res.data[0].cleantime;
-      })
-        .catch((err) => {
-          console.error(err);
-        });
-
       if (this.clean_v == 0) {
         this.clean_v = 15;
         this.$http.post("/web/" + this.$api + "/control", {
@@ -119,13 +97,6 @@ export default {
 
     },
     cap: function () {
-      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
-        console.log(res.data);
-        this.clean_v = res.data[0].cleantime;
-      })
-        .catch((err) => {
-          console.error(err);
-        });
 
       if (this.cap_V == 0) {
         this.cap_V = 1;
@@ -148,6 +119,23 @@ export default {
 
       console.log("cap");
     },
+
+    function () {
+      
+      this.$http.get("/web/"+this.$api+"/bath/1").then((res)=>{
+        console.log(res.data);
+        this.temp=res.data[0].temp;
+        this.waterlevel = res.data[0].waterlevel;
+      })  
+      .catch((err)=>{
+        console.error(err);
+      });
+    },
+
+  },
+
+  created(){
+    setInterval(this.function, 10000);
   },
 };
 </script>
