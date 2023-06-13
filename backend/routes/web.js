@@ -107,22 +107,30 @@ router.post('/:api/control', async function (req, res, next) {
   let cleantime = req.body.cleantime;
 
   if (check(api)) {
+    if (cleantime == 15) {
+      let date = new Date(new Date().setSeconds(new Date().getSeconds() + 15));
 
-    let date = new Date(new Date().setSeconds(new Date().getSeconds()+15));
+      schedule.scheduleJob(date, async function () {
+        logger.info('스케쥴 작동');
+        sql_staring = 'select * from control where bathid = ';
+        sql_staring += bathid;
+        sql_staring += ' order by date desc limit 1'
 
-    schedule.scheduleJob(date, async function () {
-      logger.info('스케쥴 작동');
-      sql_staring = 'insert into control values(null,';
-      sql_staring += userid + ',';
-      sql_staring += bathid + ',';
-      sql_staring += cap + ',';
-      sql_staring += hvalve + ',';
-      sql_staring += cvalve + ',';
-      sql_staring += '0';
-      sql_staring += ',default,default';
-      sql_staring += ',default); ';
-      let result = await mysql(sql_staring);
-    });
+        let resultt = await mysql(sql_staring);
+        
+        sql_staring = 'insert into control values(null,';
+        sql_staring += resultt[0].userid + ',';
+        sql_staring += resultt[0].bathid + ',';
+        sql_staring += resultt[0].cap + ',';
+        sql_staring += resultt[0].hvalve + ',';
+        sql_staring += resultt[0].cvalve + ',';
+        sql_staring += '0';
+        sql_staring += ',default,default';
+        sql_staring += ',default); ';
+        let result = await mysql(sql_staring);
+      });
+    }
+
 
 
     sql_staring = 'insert into control values(null,';
