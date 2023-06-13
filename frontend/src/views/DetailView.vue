@@ -29,28 +29,20 @@ export default {
     };
   },
   methods: {
-    coldWater: async function () {
-      await this.$http.get("/arduino/"+this.$api+"/control/1").then((res)=>{
-        console.log(res.data);
-        console.log("arduino");
-        this.clean_v = res.data[0].cleantime;
-      })  
-      .catch((err)=>{
-        console.error(err);
-      });
+    coldWater: function () {
       if (this.cvalve == 0) {
         this.cvalve = 1;
       } else {
         this.cvalve = 0;
       }
 
-      await this.$http.post("/web/" + this.$api + "/control", {
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
         "cvalve": this.cvalve,
         "hvalve": this.hvalve,
-        "cleantime": this.clean_v
+        "cleantime": this.clean_v,
       }).then((res) => {
         console.log(res);
       })
@@ -60,22 +52,14 @@ export default {
 
       console.log("냉수");
     },
-    hotWater: async function () {
-      await this.$http.get("/arduino/"+this.$api+"/control/1").then((res)=>{
-        console.log(res.data);
-        console.log("arduino");
-        this.clean_v = res.data[0].cleantime;
-      })  
-      .catch((err)=>{
-        console.error(err);
-      });
-      
+    hotWater: function () {
+
       if (this.hvalve == 0) {
         this.hvalve = 1;
       } else {
         this.hvalve = 0;
       }
-      await this.$http.post("/web/" + this.$api + "/control", {
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -91,19 +75,15 @@ export default {
 
       console.log("온수");
     },
-    clean: async function () {
-      await this.$http.get("/arduino/"+this.$api+"/control/1").then((res)=>{
-        console.log(res.data);
-        console.log("arduino");
-        this.clean_v = res.data[0].cleantime;
-      })  
-      .catch((err)=>{
-        console.error(err);
-      });
+    clean: function () {
 
       if (this.clean_v == 0) {
         this.clean_v = 15;
-        await this.$http.post("/web/" + this.$api + "/control", {
+      }else{
+        this.clean_v = 0;
+      }
+
+      this.$http.post("/web/" + this.$api + "/control", {
           "userid": "1",
           "bathid": "1",
           "cap": this.cap_V,
@@ -116,27 +96,16 @@ export default {
           .catch((err) => {
             console.error("안녕");
           });
-
-        console.log("청소");
-      }
-
+      console.log("청소");
     },
-
-      await this.$http.get("/arduino/"+this.$api+"/control/1").then((res)=>{
-        console.log(res.data);
-        console.log("arduino");
-        this.clean_v = res.data[0].cleantime;
-      })  
-      .catch((err)=>{
-        console.error(err);
-      });
+    cap: function () {
 
       if (this.cap_V == 0) {
         this.cap_V = 1;
       } else {
         this.cap_V = 0;
       }
-      await this.$http.post("/web/" + this.$api + "/control", {
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,

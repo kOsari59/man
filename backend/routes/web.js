@@ -105,9 +105,9 @@ router.post('/:api/control', async function (req, res, next) {
   let hvalve = req.body.hvalve;
   let cvalve = req.body.cvalve;
   let cleantime = req.body.cleantime;
+  let flag = req.body.flag;
 
   if (check(api)) {
-    if (cleantime == 15) {
       let date = new Date(new Date().setSeconds(new Date().getSeconds() + 15));
 
       schedule.scheduleJob(date, async function () {
@@ -129,7 +129,6 @@ router.post('/:api/control', async function (req, res, next) {
         sql_staring += ',default); ';
         let result = await mysql(sql_staring);
       });
-    }
 
 
 
