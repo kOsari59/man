@@ -121,7 +121,6 @@ export default {
       }
 
     },
-    cap: async function () {
 
       await this.$http.get("/arduino/"+this.$api+"/control/1").then((res)=>{
         console.log(res.data);
