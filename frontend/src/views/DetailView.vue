@@ -121,7 +121,7 @@ export default {
     },
 
     function () {
-      this.$http.get("/arduino/"+this.$api+"/1").then((res)=>{
+      this.$http.get("/arduino/"+this.$api+"control/1").then((res)=>{
         console.log(res.data);
         console.log("arduino");
         this.cleantime = res[0].cleantime;
