@@ -123,6 +123,7 @@ export default {
     function () {
       this.$http.get("/arduino/"+this.$api+"/1").then((res)=>{
         console.log(res.data);
+        console.log("arduino");
         this.cleantime = res[0].cleantime;
       })  
       .catch((err)=>{
@@ -133,7 +134,7 @@ export default {
   },
 
   created(){
-    setInterval(this.function, 10000);
+    setInterval(this.function, 1000);
   },
 };
 </script>
