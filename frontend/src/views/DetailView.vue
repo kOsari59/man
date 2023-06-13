@@ -30,6 +30,13 @@ export default {
   },
   methods: {
     coldWater: function () {
+      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
+        console.log(res.data);
+        this.clean_v = res.data[0].cleantime;
+      })
+        .catch((err) => {
+          console.error(err);
+        });
       if (this.cvalve == 0) {
         this.cvalve = 1;
       } else {
@@ -53,6 +60,13 @@ export default {
       console.log("냉수");
     },
     hotWater: function () {
+      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
+        console.log(res.data);
+        this.clean_v = res.data[0].cleantime;
+      })
+        .catch((err) => {
+          console.error(err);
+        });
       if (this.hvalve == 0) {
         this.hvalve = 1;
       } else {
@@ -105,6 +119,13 @@ export default {
 
     },
     cap: function () {
+      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
+        console.log(res.data);
+        this.clean_v = res.data[0].cleantime;
+      })
+        .catch((err) => {
+          console.error(err);
+        });
 
       if (this.cap_V == 0) {
         this.cap_V = 1;
