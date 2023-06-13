@@ -22,21 +22,21 @@ export default {
   },
   data() {
     return {
-      cvalve : 0,
-      hvalve : 0,
-      clean_v : 0,
-      cap_V : 0
+      cvalve: 0,
+      hvalve: 0,
+      clean_v: 0,
+      cap_V: 0
     };
   },
   methods: {
     coldWater: function () {
-      if(this.cvalve == 0 ){
+      if (this.cvalve == 0) {
         this.cvalve = 1;
-      }else{
+      } else {
         this.cvalve = 0;
       }
-      
-      this.$http.post("/web/"+this.$api+"/control", {
+
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -50,15 +50,15 @@ export default {
           console.error("안녕");
         });
 
-        console.log("냉수");
+      console.log("냉수");
     },
     hotWater: function () {
-      if(this.hvalve == 0 ){
+      if (this.hvalve == 0) {
         this.hvalve = 1;
-      }else{
+      } else {
         this.hvalve = 0;
       }
-      this.$http.post("/web/"+this.$api+"/control", {
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,
@@ -72,39 +72,46 @@ export default {
           console.error("안녕");
         });
 
-        console.log("온수");
+      console.log("온수");
     },
     clean: function () {
 
-      if(this.clean_v == 0 ){
-        this.clean_v = 15;
-      }else{
-        this.clean_v = 0;
-      }
-      this.$http.post("/web/"+this.$api+"/control", {
-        "userid": "1",
-        "bathid": "1",
-        "cap": this.cap_V,
-        "cvalve": this.cvalve,
-        "hvalve": this.hvalve,
-        "cleantime": this.clean_v
-      }).then((res) => {
-        console.log(res);
+      this.$http.get("/arduino/" + this.$api + "/control/1").then((res) => {
+        console.log(res.data);
+        this.clean_v = res.data[0].cleantime;
       })
         .catch((err) => {
-          console.error("안녕");
+          console.error(err);
         });
 
-      console.log("청소");
+      if (this.clean_v == 0) {
+        this.clean_v = 15;
+        this.$http.post("/web/" + this.$api + "/control", {
+          "userid": "1",
+          "bathid": "1",
+          "cap": this.cap_V,
+          "cvalve": this.cvalve,
+          "hvalve": this.hvalve,
+          "cleantime": this.clean_v
+        }).then((res) => {
+          console.log(res);
+        })
+          .catch((err) => {
+            console.error("안녕");
+          });
+
+        console.log("청소");
+      }
+
     },
     cap: function () {
 
-      if(this.cap_V == 0 ){
+      if (this.cap_V == 0) {
         this.cap_V = 1;
-      }else{
+      } else {
         this.cap_V = 0;
       }
-      this.$http.post("/web/"+this.$api+"/control", {
+      this.$http.post("/web/" + this.$api + "/control", {
         "userid": "1",
         "bathid": "1",
         "cap": this.cap_V,

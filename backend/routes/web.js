@@ -121,6 +121,7 @@ router.post('/:api/control', async function (req, res, next) {
       sql_staring += '0';
       sql_staring += ',default,default';
       sql_staring += ',default); ';
+      let result = await mysql(sql_staring);
     });
 
 
