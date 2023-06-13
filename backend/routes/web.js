@@ -60,21 +60,22 @@ router.post('/:api/schedule', async function (req, res, next) {
   let start_time = req.body.start_time;
   if (check(api)) {
 
-  let date = new Date(start_time);
-  schedule.scheduleJob(date, async function() {
-    sql_staring = 'insert into control values(null,';
+    let date = new Date(start_time);
+    schedule.scheduleJob(date, async function () {
+      logger.info('스케쥴 작동');
+      sql_staring = 'insert into control values(null,';
       sql_staring += userid + ',';
       sql_staring += bathid + ',';
       sql_staring += '0,';
       sql_staring += '0,';
       sql_staring += '0,';
       sql_staring += cleantime + ',';
-      sql_staring += temp +',';
+      sql_staring += temp + ',';
       sql_staring += waterlevel;
       sql_staring += ',default); ';
       let result = await mysql(sql_staring);
-  });
-  
+    });
+
     sql_staring = 'insert into schedule values(null,';
     sql_staring += userid + ',';
     sql_staring += bathid + ',';
@@ -92,36 +93,54 @@ router.post('/:api/schedule', async function (req, res, next) {
 });
 
 //컨트롤
-router.post('/:api/control', async function ( req, res, next) {
+router.post('/:api/control', async function (req, res, next) {
   logger.info('post web/:api/control');
-    let {
-      api
-    } = req.params;
+  let {
+    api
+  } = req.params;
 
-    let userid = req.body.userid;
-    let bathid = req.body.bathid;
-    let cap = req.body.cap;
-    let hvalve = req.body.hvalve;
-    let cvalve = req.body.cvalve;
-    let cleantime = req.body.cleantime;
-    if (check(api)) {
+  let userid = req.body.userid;
+  let bathid = req.body.bathid;
+  let cap = req.body.cap;
+  let hvalve = req.body.hvalve;
+  let cvalve = req.body.cvalve;
+  let cleantime = req.body.cleantime;
+
+  if (check(api)) {
+
+    let date = new Date(new Date().setSeconds(new Date().getSeconds()+15));
+
+    schedule.scheduleJob(date, async function () {
+      logger.info('스케쥴 작동');
       sql_staring = 'insert into control values(null,';
       sql_staring += userid + ',';
       sql_staring += bathid + ',';
       sql_staring += cap + ',';
       sql_staring += hvalve + ',';
       sql_staring += cvalve + ',';
-      sql_staring += cleantime;
+      sql_staring += '0';
       sql_staring += ',default,default';
       sql_staring += ',default); ';
+    });
 
-      let result = await mysql(sql_staring);
-      res.send(result);
 
-    }
-    else {
-      res.send("실패");
-    }
+    sql_staring = 'insert into control values(null,';
+    sql_staring += userid + ',';
+    sql_staring += bathid + ',';
+    sql_staring += cap + ',';
+    sql_staring += hvalve + ',';
+    sql_staring += cvalve + ',';
+    sql_staring += cleantime;
+    sql_staring += ',default,default';
+    sql_staring += ',default); ';
+
+    let result = await mysql(sql_staring);
+    res.send(result);
+
+  }
+  else {
+    res.send("실패");
+  }
 });
 
 
