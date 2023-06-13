@@ -121,11 +121,9 @@ export default {
     },
 
     function () {
-      
-      this.$http.get("/web/"+this.$api+"/bath/1").then((res)=>{
+      this.$http.get("/arduino/"+this.$api+"/1").then((res)=>{
         console.log(res.data);
-        this.temp=res.data[0].temp;
-        this.waterlevel = res.data[0].waterlevel;
+        this.cleantime = res[0].cleantime;
       })  
       .catch((err)=>{
         console.error(err);
