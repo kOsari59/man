@@ -7,7 +7,7 @@
     <div class="button-container">
       <button @click="coldWater">냉수</button>
       <button @click="hotWater">온수</button>
-      <button @click="clean">청소</button>
+      <button id='clean_btn' @click="clean">청소</button>
       <button @click="cap">마개</button>
     </div>
     <Footer />
@@ -78,12 +78,32 @@ export default {
     clean: function () {
 
       if (this.clean_v == 0) {
-        this.clean_v = 15;
-      }else{
+        this.clean_v = 1;
+      } else {
         this.clean_v = 0;
       }
 
       this.$http.post("/web/" + this.$api + "/control", {
+        "userid": "1",
+        "bathid": "1",
+        "cap": this.cap_V,
+        "cvalve": this.cvalve,
+        "hvalve": this.hvalve,
+        "cleantime": this.clean_v
+      }).then((res) => {
+        console.log(res);
+      })
+        .catch((err) => {
+          console.error("안녕");
+        });
+      console.log("청소");
+
+      const target = document.getElementById('clean_btn');
+      target.disabled = true;
+      setTimeout(() => {
+
+        this.clean_v = 0;
+        this.$http.post("/web/" + this.$api + "/control", {
           "userid": "1",
           "bathid": "1",
           "cap": this.cap_V,
@@ -96,7 +116,17 @@ export default {
           .catch((err) => {
             console.error("안녕");
           });
-      console.log("청소");
+        console.log("청소끝");
+        target.disabled = false;
+      }, 15000);
+
+      //15초 뒤에 실행
+      //버튼 활성화
+      //밑에꺼 실행
+
+
+
+
     },
     cap: function () {
 

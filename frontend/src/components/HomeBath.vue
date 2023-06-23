@@ -36,7 +36,15 @@ export default {
     },
   },
   created(){
-    setInterval(this.function, 500);
+    setInterval(this.function, 10000),
+    this.$http.get("/web/"+this.$api+"/bath/1").then((res)=>{
+        console.log(res.data);
+        this.temp=res.data[0].temp;
+        this.waterlevel = res.data[0].waterlevel;
+      })  
+      .catch((err)=>{
+        console.error(err);
+      });
   },
   //상위 컴포넌트(HomeView)에서 받은 데이터
   props: ["isScroll", "bathImg"],
